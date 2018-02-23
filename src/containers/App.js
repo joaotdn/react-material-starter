@@ -1,34 +1,55 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { ConnectedRouter } from 'connected-react-router'
-import { Layout, Row, Col } from 'antd'
 import routes from '../routes'
+import { Button, NavigationDrawer, FontIcon } from 'react-md'
 
-import NavBar from '../components/ui/NavBar'
 
-class App extends Component {
+class App extends PureComponent {
+  constructor() {
+    super()
+    this.state = {
+      visible: false
+    }
+  }
+
+  show = () => {
+    this.setState({ visible: true });
+  };
+
+  hide = () => {
+    this.setState({ visible: false });
+  };
+
   render() {
-    const { Header, Content, Footer } = Layout
     const { history } = this.props
+    const { visible, page, renderNode } = this.state
+    const toolbarActions = <div></div>
 
     return (
       <div className="App">
-        <Header>
-          <div className="logo" />
-          <NavBar history={history} />
-        </Header>
-        <Content style={{ padding: '40px 0' }}>
-          <Row>
-              <Col sm={24} lg={{ span: 22, offset: 1 }}>
-                <ConnectedRouter history={history}>
-                    { routes }
-                </ConnectedRouter>
-              </Col>
-          </Row>
-        </Content>
-        <Footer>
-          <span>Created by joaotdn@gmail.com</span>
-        </Footer>
+        <NavigationDrawer
+          navItems={[]}
+          mobileDrawerType={NavigationDrawer.DrawerTypes.TEMPORARY_MINI}
+          tabletDrawerType={NavigationDrawer.DrawerTypes.PERSISTENT_MINI}
+          desktopDrawerType={NavigationDrawer.DrawerTypes.PERSISTENT_MINI}
+          toolbarTitle="BIFROST"
+          contentId="main-bifrost-content"
+          temporaryIcon={<FontIcon>menu</FontIcon>}
+          persistentIcon={<FontIcon>chevron_left</FontIcon>}
+          contentClassName="md-grid"
+          toolbarId="bifrost-toolbar"
+          toolbarZDepth={0}
+          toolbarThemeType="default"
+          toolbarActions={toolbarActions}
+          drawerId="bifrost-main-drawer"
+          drawerZDepth={0}
+          miniDrawerStyle={{boxShadow:'none'}}
+        >
+          <ConnectedRouter history={history}>
+              { routes }
+          </ConnectedRouter>
+        </NavigationDrawer>
       </div>
     )
   }

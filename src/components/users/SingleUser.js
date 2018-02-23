@@ -7,10 +7,11 @@ class SingleUser extends Component {
         if (this.props.users && this.props.users.length === 0)
             this.props.dispatch(getAllUsers())
     }
+    
     render() { 
-        const { users } = this.props
+        const { users, history } = this.props
         const userId = this.props.match.params.id
-        const user = (users && userId) ? users.find(u => u.id==userId) : null
+        const user = (users && userId) ? users.find(u => u.id===userId) : null
         
         return (
             <div>
@@ -23,6 +24,14 @@ class SingleUser extends Component {
                     )
                     : null
                 }
+                <p>
+                    <a href="#" onClick={(e) => {
+                        e.preventDefault()
+                        history.goBack()}}
+                    >
+                        Voltar
+                    </a>
+                </p>
             </div>
         )
     }

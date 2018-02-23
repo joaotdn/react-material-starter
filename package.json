@@ -1,14 +1,16 @@
 {
-  "name": "heimdall",
-  "version": "0.1.0",
+  "name": "bifrost",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "antd": "^3.2.0",
     "connected-react-router": "^4.3.0",
     "cross-fetch": "^1.1.1",
+    "node-sass-chokidar": "0.0.3",
+    "npm-run-all": "^4.1.2",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-md": "^1.2.11",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
@@ -18,13 +20,18 @@
     "redux-thunk": "^2.2.0"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test --env=jsdom",
+    "build-css": "node-sass-chokidar --include-path ./node_modules src/assets/styles -o src/assets/styles",
+    "watch-css": "npm run build-css && npm run build-css -- --watch --recursive",
+    "start-js": "react-scripts start",
+    "start": "npm-run-all -p watch-css start-js",
+    "build": "npm run build-css && react-scripts build",
+    "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
     "babel-plugin-import": "^1.6.3",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "less-vars-to-js": "^1.2.1",
     "react-app-rewire-less": "^2.1.0",
     "react-app-rewired": "^1.4.1"
